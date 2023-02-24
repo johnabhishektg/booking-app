@@ -69,7 +69,19 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
-  res.json({ token });
+  if (token) {
+    jwt.verify(token, jwtSecret, {}, async (err, dec) => {
+      if (err) throw err;
+      const { name, email, _id } = await User.findById(dec.id);
+      res.json({ name, email, _id });
+    });
+  } else {
+    res.json(null);
+  }
+});
+
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json(true);
 });
 
 app.listen(3000, (req, res) => {
