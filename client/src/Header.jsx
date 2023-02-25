@@ -8,7 +8,7 @@ export default function Header() {
     <header className="">
       <div className="flex justify-between">
         <a href="/" className="font-bold text-2xl text-primary">
-          OYO
+          resa
         </a>
 
         <div className="flex align-center p-1 shadow-md shadow-gray gap-3 border border-gray-300 rounded-lg ">
