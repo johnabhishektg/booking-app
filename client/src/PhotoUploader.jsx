@@ -27,7 +27,7 @@ export default function PhotoUploader({ addedPhotos, onChange }) {
       })
       .then((response) => {
         const { data: filenames } = response;
-        setAddedPhotos((prev) => {
+        onChange((prev) => {
           return [...prev, ...filenames];
         });
       });

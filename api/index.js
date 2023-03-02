@@ -8,6 +8,7 @@ const User = require("./models/User.js");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const fs = require("fs-extra");
+const Place = require("./models/Place.js");
 require("dotenv").config();
 const app = express();
 
@@ -29,8 +30,8 @@ app.use(
   })
 );
 
-app.get("/test", (req, res) => {
-  res.json("test ok");
+app.get("/lynn", (req, res) => {
+  res.json("ily");
 });
 
 app.post("/register", async (req, res) => {
@@ -106,14 +107,52 @@ app.post("/upload", photoMiddleware.array("photos", 100), (req, res) => {
     const parts = originalname.split(".");
     const ext = parts[parts.length - 1];
     const newPath = path + "." + ext;
-    newReqPath = newPath;
     fs.renameSync(path, newPath);
     uploadedFiles.push(newPath.replace("uploads\\", ""));
   }
   res.json(uploadedFiles);
 });
 
-console.log("upload\\");
+app.post("/places", (req, res) => {
+  const { token } = req.cookies;
+  const {
+    title,
+    address,
+    addedPhotos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests,
+  } = req.body;
+  jwt.verify(token, jwtSecret, {}, async (err, dec) => {
+    if (err) throw err;
+    const placeDoc = await Place.create({
+      owner: dec.id,
+      title,
+      address,
+      photos: addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+    });
+    res.json(placeDoc);
+  });
+});
+
+app.get("/places", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, jwtSecret, {}, async (err, dec) => {
+    if (err) throw err;
+    const { id } = dec;
+    res.json(await Place.find({ owner: id }));
+  });
+});
+
 app.listen(3000, (req, res) => {
   console.log("listening on port 3000");
 });
