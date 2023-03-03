@@ -11,7 +11,12 @@ export default function Perks({ selected, onChange }) {
   return (
     <div className="grid grid-cols-2 gap-2 mt-3 md:grid-cols-3 lg:grid-cols-4">
       <label className="border p-4 flex gap-2 rounded-xl">
-        <input type="checkbox" name="wifi" onChange={onCbSelect} />
+        <input
+          type="checkbox"
+          name="wifi"
+          checked={selected.includes("wifi")}
+          onChange={onCbSelect}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -30,7 +35,12 @@ export default function Perks({ selected, onChange }) {
       </label>
 
       <label className="border p-4 flex gap-2 rounded-xl">
-        <input type="checkbox" name="free parking spot" onChange={onCbSelect} />
+        <input
+          type="checkbox"
+          checked={selected.includes("free parking spot")}
+          name="free parking spot"
+          onChange={onCbSelect}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -49,7 +59,12 @@ export default function Perks({ selected, onChange }) {
       </label>
 
       <label className="border p-4 flex gap-2 rounded-xl">
-        <input type="checkbox" name="tv" onChange={onCbSelect} />
+        <input
+          type="checkbox"
+          name="tv"
+          checked={selected.includes("tv")}
+          onChange={onCbSelect}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -68,7 +83,12 @@ export default function Perks({ selected, onChange }) {
       </label>
 
       <label className="border p-4 flex gap-2 rounded-xl">
-        <input type="checkbox" name="pets" onChange={onCbSelect} />
+        <input
+          type="checkbox"
+          name="pets"
+          checked={selected.includes("pets")}
+          onChange={onCbSelect}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -87,7 +107,12 @@ export default function Perks({ selected, onChange }) {
       </label>
 
       <label className="border p-4 flex gap-2 rounded-xl">
-        <input type="checkbox" name="private entrance" onChange={onCbSelect} />
+        <input
+          type="checkbox"
+          checked={selected.includes("private entrance")}
+          name="private entrance"
+          onChange={onCbSelect}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
