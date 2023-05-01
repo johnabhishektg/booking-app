@@ -68,7 +68,7 @@ export default function PhotoUploader({ addedPhotos, onChange }) {
           addedPhotos.map((link) => (
             <div className="flex relative" key={link}>
               <img
-                className="object-contain rounded-xl"
+                className="object-cover aspect-square rounded-xl"
                 src={"http://localhost:3000/uploads/" + link}
                 alt=""
               />

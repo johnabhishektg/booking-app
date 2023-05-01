@@ -44,9 +44,9 @@ export default function PlacesPage() {
               key={place}
             >
               {place.photos.length > 0 && (
-                <div className="flex w-32 h-32 rounded-xl bg-gray-300 grow shrink-0">
+                <div className="flex w-32 h-32 rounded-xl bg-gray-300  shrink-0">
                   <img
-                    className="rounded-xl object-cover"
+                    className="rounded-xl aspect-square object-cover "
                     src={"http://localhost:3000/uploads/" + place.photos[0]}
                     alt=""
                   />
