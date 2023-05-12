@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const fs = require("fs-extra");
 const Place = require("./models/Place.js");
+const Booking = require("./models/Booking.js");
 require("dotenv").config();
 const app = express();
 
@@ -199,6 +200,34 @@ app.put("/places", async (req, res) => {
 
 app.get("/places", async (req, res) => {
   res.json(await Place.find());
+});
+
+app.post("/bookings", async (req, res) => {
+  const { place, checkIn, checkOut, numberOfGuests, name, phone, price } =
+    req.body;
+  const bookingDoc = await Booking.create({
+    place,
+    checkIn,
+    checkOut,
+    numberOfGuests,
+    name,
+    phone,
+    price,
+  });
+  res.json(bookingDoc);
+});
+
+function getUserFromToken(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, jwtSecret, {}, async (err, dec) => {
+      if (err) throw err;
+      resolve(dec);
+    });
+  });
+}
+
+app.get("/bookings", async (req, res) => {
+  const userData = await getUserFromToken(req);
 });
 
 app.listen(3000, (req, res) => {
