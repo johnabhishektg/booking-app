@@ -35,6 +35,15 @@ app.get("/test", (req, res) => {
   res.json("test");
 });
 
+function getUserFromToken(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(req.cookies.token, jwtSecret, {}, async (err, dec) => {
+      if (err) throw err;
+      resolve(dec);
+    });
+  });
+}
+
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -203,6 +212,7 @@ app.get("/places", async (req, res) => {
 });
 
 app.post("/bookings", async (req, res) => {
+  const userData = await getUserFromToken(req);
   const { place, checkIn, checkOut, numberOfGuests, name, phone, price } =
     req.body;
   const bookingDoc = await Booking.create({
@@ -213,21 +223,14 @@ app.post("/bookings", async (req, res) => {
     name,
     phone,
     price,
+    user: userData.id,
   });
   res.json(bookingDoc);
 });
 
-function getUserFromToken(req) {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, jwtSecret, {}, async (err, dec) => {
-      if (err) throw err;
-      resolve(dec);
-    });
-  });
-}
-
 app.get("/bookings", async (req, res) => {
   const userData = await getUserFromToken(req);
+  res.json(await Booking.find({ user: userData.id }));
 });
 
 app.listen(3000, (req, res) => {
